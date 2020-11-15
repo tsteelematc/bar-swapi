@@ -14,7 +14,12 @@ export class HomePage {
     this.swapi.fetchPlanets().subscribe(
       x => this.planets = [
         ...this.planets
-        , ...x
+        , ...x.map(y => ({
+          ...y 
+          , displayColorBasedOnBusinessRules : 
+            y.name == 'unknown' ? 'goldenrod' : 
+              y.name == 'Tatooine' ? 'green' : 'inherit' 
+        }))
       ]
         //.filter(x => x.name != "unknown")
         .sort(

@@ -10,7 +10,7 @@
   <ion-list>
     <ion-item
       *ngFor="let planet of planets"
-      [style.color]="planet.name == 'unknown' ? 'goldenrod' : 'inherit'"
+      [style.color]="planet.displayColorBasedOnBusinessRules"
     >
       {{ planet.name }}
     </ion-item>
