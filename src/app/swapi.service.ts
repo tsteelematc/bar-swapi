@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { pipe, EMPTY, merge, race } from 'rxjs';
-import { repeat, filter, tap, expand, map } from 'rxjs/operators';
+import { repeat, tap, expand, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,13 @@ export class SwapiService {
   constructor(private http: HttpClient) { }
 
   fetchPlanets() {
+
+    // return this.http.get("https://swapi.dev/api/planets/").pipe(
+    //   tap(x => console.log(x)),
+    //   map(x => (x as any).results.map(y => ({ name: y.name }))),
+    //   //repeat(3),
+    //   tap(x => console.log(x)),
+    // );
 
     //return merge(
     // return race(
@@ -29,7 +36,6 @@ export class SwapiService {
         , expand(x => (x as any).next ? this.http.get((x as any).next) : EMPTY )
         //, race()
         , map(x => (x as any).results.map(y => ({ name: y.name })))
-        //, filter(x => (x as any).results.name[0] == 'T')
         , tap(x => console.log(x))
       )
     ;
