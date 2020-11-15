@@ -23,9 +23,10 @@ export class SwapiService {
 
     return this.http.get("https://swapi.dev/api/planets/")
       .pipe(
-        //repeat(5)
+        tap(x => console.log(x))
+        //, repeat(5)
         
-        expand(x => (x as any).next ? this.http.get((x as any).next) : EMPTY )
+        , expand(x => (x as any).next ? this.http.get((x as any).next) : EMPTY )
         //, race()
         , map(x => (x as any).results.map(y => ({ name: y.name })))
         //, filter(x => (x as any).results.name[0] == 'T')

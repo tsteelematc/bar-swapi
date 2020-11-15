@@ -15,10 +15,12 @@ export class HomePage {
       x => this.planets = [
         ...this.planets
         , ...x
-      ].sort(
-        (x, y) => x.name > y.name ? 1 : -1 
+      ]
+        //.filter(x => x.name != "unknown")
+        .sort(
+          (x, y) => x.name.toUpperCase() > y.name.toUpperCase() ? 1 : -1 
         //(x, y) => x.population > y.population ? -1 : 1 
-      )
+        )
     );
   }
 
