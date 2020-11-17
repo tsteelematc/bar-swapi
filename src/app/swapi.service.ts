@@ -13,6 +13,23 @@ export class SwapiService {
 
   fetchPlanets() {
 
+    // First, whats a pipe?
+
+    // Calling cat, passing results to bar, passing those results to foo...
+    //foo(bar(cat()));
+
+    // In F# there is a 'pipe' operator to make this more syntactically pretty...
+    //cat |> bar |> foo
+
+    // Or without the pipe symbol, a pipe function can work too...
+    // cat.pipe(
+    //   bar
+    //   , foo
+    // );
+
+
+    // Second, simple pipe of observable to some operations... tap, map, repeat...
+
     // return this.http.get("https://swapi.dev/api/planets/").pipe(
     //   tap(x => console.log(x)),
     //   map(x => (x as any).results.map(y => ({ name: y.name }))),
@@ -20,6 +37,9 @@ export class SwapiService {
     //   tap(x => console.log(x)),
     // );
 
+
+    // Third, naively combine them with merge and race...
+    
     //return merge(
     // return race(
     //   this.http.get("https://swapi.dev/api/planets/")
@@ -28,13 +48,12 @@ export class SwapiService {
     //   map(x => (x as any).results.map(y => ({ name: y.name })))
     // );
 
+    // Finally, recurse, use the hypermedia REST API ! ! !
+
     return this.http.get("https://swapi.dev/api/planets/")
       .pipe(
         tap(x => console.log(x))
-        //, repeat(5)
-        
         , expand(x => (x as any).next ? this.http.get((x as any).next) : EMPTY )
-        //, race()
         , map(x => (x as any).results.map(y => ({ name: y.name })))
         , tap(x => console.log(x))
       )
