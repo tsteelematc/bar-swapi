@@ -51,10 +51,10 @@ export class SwapiService {
 
     // Finally, recurse, use the hypermedia REST API ! ! !
 
-    return this.http.get("http://swapi.dev/api/planets/")
+    return this.http.get("https://swapi.dev/api/planets/")
       .pipe(
         tap(x => console.log(x))
-        , expand(x => (x as any).next ? this.http.get((x as any).next) : EMPTY )
+        , expand(x => (x as any).next ? this.http.get((x as any).next.replaceAll("http:", "https:")) : EMPTY )
         , map(x => (x as any).results.map(y => ({ name: y.name })))
         , tap(x => console.log(x))
       )
